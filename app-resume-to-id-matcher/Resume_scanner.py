@@ -59,11 +59,11 @@ def rotate_and_getfaces(image,rotating=False):
     rotates=[rgb_image]
     if rotating:
         rotates+=[rotate_image(rgb_image, angle) for angle in angles]
-    with threadpools.ThreadPoolExecutor(max_workers=8,thread_name_prefix="worker_") as masterpool:
+    with threadpools.ThreadPoolExecutor(max_workers=3,thread_name_prefix="worker_") as masterpool:
         futures=masterpool.map(get_face,rotates)
         raw_faces=[future for future in futures]
         faces = [item for sublist in raw_faces for item in sublist]
-        # masterpool.shutdown(wait=True)
+        masterpool.shutdown(wait=True)
 
     log.info("found %d faces for the document",len(faces))    
     return faces
@@ -71,7 +71,7 @@ def get_face(rt_img):
     l_faces=[]
     log.info("extracting a face...")
         # Detect faces in the image
-    face_locations = face_recognition.face_locations(rt_img, model='cnn')
+    face_locations = face_recognition.face_locations(rt_img,model='cnn')
     log.info(" %d locations fetched" , len(face_locations))
     # Extract the face region
     for face_location in face_locations:
