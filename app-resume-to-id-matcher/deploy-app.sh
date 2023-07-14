@@ -1,6 +1,3 @@
-
-#Before this there was another deployment file that copies this one to gcloud .... https://github.com/CoderRayMan/pythons/blob/master/AI/Resume_scanner/deploy.sh
-#run that before this one
 cat << 'EOF'
  _________________________________________ 
 /                                         \
