@@ -71,7 +71,7 @@ def get_face(rt_img):
     l_faces=[]
     log.info("extracting a face...")
         # Detect faces in the image
-    face_locations = face_recognition.face_locations(rt_img,model='cnn')
+    face_locations = face_recognition.face_locations(rt_img)
     log.info(" %d locations fetched" , len(face_locations))
     # Extract the face region
     for face_location in face_locations:
