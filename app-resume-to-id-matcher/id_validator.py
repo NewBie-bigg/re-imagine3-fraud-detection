@@ -94,9 +94,9 @@ def process_document(file_path,content_type,isId:bool=True):
     '''
     log.info("processing and Verifying ... .. ")
 
-    project_id = "fraud-detection-390311"
+    project_id = "gcds-oht33215u2-2023"
     location = "us"
-    processor_id = "12bd205dd2fc93a5"
+    processor_id = "a2ede37268d33328"
     
     with open(file_path, "rb") as image:
         image_content = image.read()
