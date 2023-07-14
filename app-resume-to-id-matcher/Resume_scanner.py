@@ -71,14 +71,14 @@ def get_face(rt_img):
     l_faces=[]
     log.info("extracting a face...")
         # Detect faces in the image
-    face_locations = face_recognition.face_locations(rt_img, model='cnn',number_of_times_to_upsample=2)
+    face_locations = face_recognition.face_locations(rt_img, model='cnn')
     log.info(" %d locations fetched" , len(face_locations))
     # Extract the face region
     for face_location in face_locations:
         # top, right, bottom, left = face_location
         # face_image = rt_img[top:bottom, left:right]
         face_encoding = face_recognition.face_encodings(
-            rt_img, known_face_locations=[face_location],num_jitters=100, model='large')[0]
+            rt_img, known_face_locations=[face_location], model='large')[0]
         log.info("encodings fetched ... ")
         l_faces.append(face_encoding)
     log.info("faces extracted... ...")
