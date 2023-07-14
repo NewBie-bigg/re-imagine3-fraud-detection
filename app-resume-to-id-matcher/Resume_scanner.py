@@ -8,7 +8,6 @@ from id_validator import process_document
 from google.api_core.exceptions import InvalidArgument
 from pdf2image import convert_from_path
 import logging as log
-import concurrent.futures as threadpools
 
 log.basicConfig(level=log.INFO)
 def extract_images_docx(cv_doc):
@@ -59,11 +58,13 @@ def rotate_and_getfaces(image,rotating=False):
     rotates=[rgb_image]
     if rotating:
         rotates+=[rotate_image(rgb_image, angle) for angle in angles]
-    with threadpools.ThreadPoolExecutor(max_workers=3,thread_name_prefix="worker_") as masterpool:
-        futures=masterpool.map(get_face,rotates)
-        raw_faces=[future for future in futures]
-        faces = [item for sublist in raw_faces for item in sublist]
-        masterpool.shutdown(wait=True)
+    for rotate in rotates:
+        faces+=get_face(rotate)
+    # with threadpools.ThreadPoolExecutor(max_workers=3,thread_name_prefix="worker_") as masterpool:
+    #     futures=masterpool.map(get_face,rotates)
+    #     raw_faces=[future for future in futures]
+    #     faces = [item for sublist in raw_faces for item in sublist]
+        # masterpool.shutdown(wait=True)
 
     log.info("found %d faces for the document",len(faces))    
     return faces
